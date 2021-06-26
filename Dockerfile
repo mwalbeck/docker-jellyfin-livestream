@@ -8,7 +8,7 @@ WORKDIR /jellyfin-web
 RUN set -ex; \
     git clone --branch $JELLYFIN_WEB_VERSION https://github.com/jellyfin/jellyfin-web.git .; \
     npm install; \
-    npm ci --no-audit --unsafe-perm; \
+    npm run build:production; \
     mv dist /dist;
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.301-buster-slim as builder
