@@ -1,0 +1,97 @@
+---
+kind: pipeline
+type: docker
+name: lint
+
+steps:
+  - name: Lint Dockerfile
+    image: hadolint/hadolint:latest-debian
+    pull: if-not-exists
+    commands:
+      - hadolint --version
+      - hadolint Dockerfile
+    when:
+      status:
+        - failure
+        - success
+
+trigger:
+  event:
+    - pull_request
+    - push
+  ref:
+    exclude:
+      - refs/heads/renovate/*
+
+---
+kind: pipeline
+type: docker
+name: test
+
+steps:
+  - name: docker
+    image: plugins/docker
+    pull: if-not-exists
+    settings:
+      dockerfile: Dockerfile
+      repo: mwalbeck/jellyfin-livestream
+      dry_run: true
+
+trigger:
+  event:
+    - pull_request
+
+depends_on:
+  - lint
+
+---
+kind: pipeline
+type: docker
+name: build and publish
+
+steps:
+  - name: determine tags
+    image: mwalbeck/determine-docker-tags:latest-distroless
+    pull: if-not-exists
+    environment:
+      APP_NAME: JELLYFIN
+      CUSTOM_TAGS: latest
+      DOCKERFILE_PATH: Dockerfile
+      INCLUDE_MAJOR: negative
+      VERSION_TYPE: docker_env
+
+  - name: docker
+    image: plugins/docker
+    pull: if-not-exists
+    settings:
+      dockerfile: Dockerfile
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_password
+      repo: mwalbeck/jellyfin-livestream
+  
+  - name: notify
+    image: plugins/matrix
+    pull: if-not-exists
+    settings:
+      homeserver: https://matrix.mwalbeck.org
+      roomid:
+        from_secret: matrix_roomid
+      username:
+        from_secret: matrix_username
+      password:
+        from_secret: matrix_password
+    when:
+      status:
+        - success
+        - failure
+
+trigger:
+  branch:
+    - master
+  event:
+    - push
+
+depends_on:
+  - lint
