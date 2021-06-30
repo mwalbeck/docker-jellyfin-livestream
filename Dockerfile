@@ -1,4 +1,4 @@
-FROM node:14.17.1-buster as web-builder
+FROM node:14.17.1-buster@sha256:39adadbd3aaa302dff693836f8959b2442ce0dfccb7bffc8f96e6693ccafbc4b as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
 ENV JELLYFIN_WEB_VERSION v10.7.6
@@ -11,7 +11,7 @@ RUN set -ex; \
     npm run build:production; \
     mv dist /dist;
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0.301-buster-slim as builder
+FROM mcr.microsoft.com/dotnet/sdk:5.0.301-buster-slim@sha256:347695db70bcae47200e39be7d09b30ff4a4187e7222fe3434d2e875ab264466 as builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin versioning=semver
 ENV JELLYFIN_VERSION v10.7.6
@@ -27,7 +27,7 @@ RUN set -ex; \
     git apply /jellyfin_livestream.patch; \
     dotnet publish Jellyfin.Server --disable-parallel --configuration Release --output="/jellyfin" --self-contained --runtime linux-x64 "-p:DebugSymbols=false;DebugType=none";
 
-FROM debian:buster-slim
+FROM debian:buster-slim@sha256:c6e92d5b7730fdfc2753c4cce68c90d6c86a6a3391955549f9fe8ad6ce619ce0
 
 SHELL [ "/bin/bash", "-exo", "pipefail", "-c" ]
 
