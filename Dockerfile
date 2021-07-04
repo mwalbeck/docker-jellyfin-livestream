@@ -36,11 +36,16 @@ COPY --from=web-builder /dist /jellyfin/jellyfin-web
 
 # Install dependencies:
 RUN apt-get update; \
-    apt-get install --no-install-recommends --no-install-suggests -y ca-certificates gnupg curl apt-transport-https; \
+    apt-get install --no-install-recommends -y \
+        ca-certificates \
+        gnupg \
+        curl \
+        apt-transport-https \
+    ; \
     curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add -; \
     echo "deb [arch=amd64] https://repo.jellyfin.org/debian buster main" | tee /etc/apt/sources.list.d/jellyfin.list; \
     apt-get update; \
-    apt-get install --no-install-recommends --no-install-suggests -y \
+    apt-get install --no-install-recommends -y \
         jellyfin-ffmpeg \
         openssl \
         locales \
@@ -49,7 +54,6 @@ RUN apt-get update; \
         gnupg \
         wget \
         apt-transport-https; \
-    apt-get clean -y; \
     rm -rf /var/lib/apt/lists/*; \
     mkdir -p /cache /config /media; \
     chmod 777 /cache /config /media; \
@@ -60,6 +64,8 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
+
+COPY start-transcode.sh /usr/local/bin/start-transcode
 
 EXPOSE 8096
 VOLUME /cache /config /media

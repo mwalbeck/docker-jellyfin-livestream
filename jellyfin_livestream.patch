@@ -1,16 +1,19 @@
 diff --git a/Jellyfin.Api/Helpers/StreamingHelpers.cs b/Jellyfin.Api/Helpers/StreamingHelpers.cs
-index 8cffe9c4c..25147d924 100644
+index 8cffe9c4c..b2f64259d 100644
 --- a/Jellyfin.Api/Helpers/StreamingHelpers.cs
 +++ b/Jellyfin.Api/Helpers/StreamingHelpers.cs
-@@ -490,7 +490,7 @@ namespace Jellyfin.Api.Helpers
+@@ -490,9 +490,9 @@ namespace Jellyfin.Api.Helpers
          /// <returns>The complete file path, including the folder, for the transcoding file.</returns>
          private static string GetOutputFilePath(StreamState state, string outputFileExtension, IServerConfigurationManager serverConfigurationManager, string? deviceId, string? playSessionId)
          {
 -            var data = $"{state.MediaPath}-{state.UserAgent}-{deviceId!}-{playSessionId!}";
-+            var data = $"{state.MediaPath}";
++            var data = state.MediaPath.Split('/');
  
-             var filename = data.GetMD5().ToString("N", CultureInfo.InvariantCulture);
+-            var filename = data.GetMD5().ToString("N", CultureInfo.InvariantCulture);
++            var filename = data[data.Length - 1].Split('.')[0];
              var ext = outputFileExtension?.ToLowerInvariant();
+             var folder = serverConfigurationManager.GetTranscodePath();
+ 
 diff --git a/Jellyfin.Api/Helpers/TranscodingJobHelper.cs b/Jellyfin.Api/Helpers/TranscodingJobHelper.cs
 index c295af7eb..0fbed92ad 100644
 --- a/Jellyfin.Api/Helpers/TranscodingJobHelper.cs
