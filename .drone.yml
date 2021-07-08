@@ -15,6 +15,16 @@ steps:
         - failure
         - success
 
+  - name: Lint script
+    image: koalaman/shellcheck-alpine
+    pull: if-not-exists
+    commands:
+      - shellcheck start-transcode.sh
+    when:
+      status:
+        - failure
+        - success
+
 trigger:
   event:
     - pull_request
