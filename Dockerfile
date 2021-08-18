@@ -1,4 +1,4 @@
-FROM node:14.17.5-buster@sha256:801df90f337b1a2b06de92b11aaa539b7257f4eae600117806e4ad352c407553 as web-builder
+FROM node:14.17.5-buster@sha256:58370f99e5f56d62847535fbcec9add28dcf44e20f32b56c5e24f5a133e88c61 as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
 ENV JELLYFIN_WEB_VERSION v10.7.6
