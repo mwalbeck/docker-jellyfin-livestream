@@ -44,6 +44,10 @@ steps:
     pull: if-not-exists
     settings:
       dockerfile: Dockerfile
+      username:
+        from_secret: dockerhub_username_ro
+      password:
+        from_secret: dockerhub_password
       repo: mwalbeck/jellyfin-livestream
       dry_run: true
 
@@ -108,6 +112,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 8350cc3a225af09967d8065eedec535dfcbba70b21870b88ab842009f1eb7e97
+hmac: 4c014c0ac1d061fbc6537b973e684eed2098287314c26286b588d3aa3e827357
 
 ...
