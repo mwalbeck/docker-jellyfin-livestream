@@ -45,9 +45,9 @@ steps:
     settings:
       dockerfile: Dockerfile
       username:
-        from_secret: dockerhub_username_ro
+        from_secret: dockerhub_username
       password:
-        from_secret: dockerhub_password
+        from_secret: dockerhub_password_ro
       repo: mwalbeck/jellyfin-livestream
       dry_run: true
 
@@ -112,6 +112,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 4c014c0ac1d061fbc6537b973e684eed2098287314c26286b588d3aa3e827357
+hmac: 89c354b4339021d06a230463959ff699fd401abb4055f58367ca2fcf6ea5a58c
 
 ...
