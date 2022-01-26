@@ -16,7 +16,7 @@ RUN set -ex; \
     npm run build:production; \
     mv dist /dist;
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0.404-bullseye-slim@sha256:5335a60131f1b02c33be113c89ef229d661fa02dbba79d28b15ac68723247eae as builder
+FROM mcr.microsoft.com/dotnet/sdk:5.0.404-bullseye-slim@sha256:45f9e3fc809cdfcaf32db3ffd39fb8b5480e00c22c2c522d33b71675355091ba as builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin versioning=semver
 ENV JELLYFIN_VERSION v10.7.7
