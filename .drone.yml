@@ -65,7 +65,7 @@ name: build and publish
 
 steps:
   - name: determine tags
-    image: mwalbeck/determine-docker-tags:latest-distroless
+    image: mwalbeck/determine-docker-tags
     pull: if-not-exists
     environment:
       APP_NAME: JELLYFIN
@@ -84,7 +84,7 @@ steps:
       password:
         from_secret: dockerhub_password
       repo: mwalbeck/jellyfin-livestream
-  
+
   - name: notify
     image: plugins/matrix
     pull: if-not-exists
@@ -112,6 +112,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 89c354b4339021d06a230463959ff699fd401abb4055f58367ca2fcf6ea5a58c
+hmac: 53bf04b6a06d1cf4fb1413abc31e7f2d3d080bb318c7e622ddabd70996702812
 
 ...
