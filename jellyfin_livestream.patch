@@ -33,21 +33,3 @@ index 2adb006e4..0209a3e64 100644
  
              if (closeLiveStream && !string.IsNullOrWhiteSpace(job.LiveStreamId))
              {
-@@ -826,16 +826,7 @@ namespace Jellyfin.Api.Helpers
-         {
-             lock (_activeTranscodingJobs)
-             {
--                var job = _activeTranscodingJobs.FirstOrDefault(j => j.Type == type && string.Equals(j.Path, path, StringComparison.OrdinalIgnoreCase));
--
--                if (job == null)
--                {
--                    return null;
--                }
--
--                OnTranscodeBeginRequest(job);
--
--                return job;
-+                return null;
-             }
-         }
- 
