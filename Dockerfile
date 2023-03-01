@@ -1,4 +1,4 @@
-FROM node:14.21.3-bullseye-slim@sha256:e94dd68eac5d8e5fe36a82a8c2f830e75b6ca8134a3d0bed4301cb5e862d46cc as web-builder
+FROM node:14.21.3-bullseye-slim@sha256:2078c11e74f5b0ccf3af171b8d152bc8645c10108de8253e1b3cd6afa6b5149b as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
 ENV JELLYFIN_WEB_VERSION v10.7.7
