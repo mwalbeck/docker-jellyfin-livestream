@@ -1,27 +1,27 @@
 diff --git a/Jellyfin.Api/Helpers/StreamingHelpers.cs b/Jellyfin.Api/Helpers/StreamingHelpers.cs
-index 8cffe9c4c..b2f64259d 100644
+index b552df0a4..ba2cdb17b 100644
 --- a/Jellyfin.Api/Helpers/StreamingHelpers.cs
 +++ b/Jellyfin.Api/Helpers/StreamingHelpers.cs
-@@ -490,9 +490,9 @@ namespace Jellyfin.Api.Helpers
+@@ -496,9 +496,9 @@ namespace Jellyfin.Api.Helpers
          /// <returns>The complete file path, including the folder, for the transcoding file.</returns>
          private static string GetOutputFilePath(StreamState state, string outputFileExtension, IServerConfigurationManager serverConfigurationManager, string? deviceId, string? playSessionId)
          {
 -            var data = $"{state.MediaPath}-{state.UserAgent}-{deviceId!}-{playSessionId!}";
 +            var data = state.MediaPath.Split('/');
- 
+
 -            var filename = data.GetMD5().ToString("N", CultureInfo.InvariantCulture);
 +            var filename = data[data.Length - 1].Split('.')[0];
              var ext = outputFileExtension?.ToLowerInvariant();
              var folder = serverConfigurationManager.GetTranscodePath();
- 
+
 diff --git a/Jellyfin.Api/Helpers/TranscodingJobHelper.cs b/Jellyfin.Api/Helpers/TranscodingJobHelper.cs
-index c295af7eb..0fbed92ad 100644
+index 2adb006e4..0209a3e64 100644
 --- a/Jellyfin.Api/Helpers/TranscodingJobHelper.cs
 +++ b/Jellyfin.Api/Helpers/TranscodingJobHelper.cs
-@@ -309,10 +309,10 @@ namespace Jellyfin.Api.Helpers
-                 }
+@@ -323,10 +323,10 @@ namespace Jellyfin.Api.Helpers
+                 #pragma warning restore CA1849
              }
- 
+
 -            if (delete(job.Path!))
 -            {
 -                await DeletePartialStreamFiles(job.Path!, job.Type, 0, 1500).ConfigureAwait(false);
@@ -30,6 +30,6 @@ index c295af7eb..0fbed92ad 100644
 +            // {
 +            //     await DeletePartialStreamFiles(job.Path!, job.Type, 0, 1500).ConfigureAwait(false);
 +            // }
- 
+
              if (closeLiveStream && !string.IsNullOrWhiteSpace(job.LiveStreamId))
              {

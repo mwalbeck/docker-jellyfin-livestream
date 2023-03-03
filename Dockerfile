@@ -1,7 +1,7 @@
-FROM node:14.21.3-bullseye-slim@sha256:2078c11e74f5b0ccf3af171b8d152bc8645c10108de8253e1b3cd6afa6b5149b as web-builder
+FROM node:16.19.1-bullseye-slim as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
-ENV JELLYFIN_WEB_VERSION v10.7.7
+ENV JELLYFIN_WEB_VERSION v10.8.9
 
 WORKDIR /jellyfin-web
 
@@ -16,10 +16,10 @@ RUN set -ex; \
     npm run build:production; \
     mv dist /dist;
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0.408-bullseye-slim@sha256:40c6bd0059eaa06b4a9c91cd3e6df138f6224bd02b2882bf6ce3aa4af3835fc5 as builder
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin versioning=semver
-ENV JELLYFIN_VERSION v10.7.7
+ENV JELLYFIN_VERSION v10.8.9
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 WORKDIR /repo
@@ -30,7 +30,7 @@ COPY jellyfin_livestream.patch /
 RUN set -ex; \
     git clone --branch $JELLYFIN_VERSION https://github.com/jellyfin/jellyfin.git .; \
     git apply /jellyfin_livestream.patch; \
-    dotnet publish Jellyfin.Server --disable-parallel --configuration Release --output="/jellyfin" --self-contained --runtime linux-x64 "-p:DebugSymbols=false;DebugType=none";
+    dotnet publish Jellyfin.Server --disable-parallel --configuration Release --output="/jellyfin" --self-contained --runtime linux-x64 -p:DebugSymbols=false -p:DebugType=none;
 
 FROM debian:bullseye-slim@sha256:77f46c1cf862290e750e913defffb2828c889d291a93bdd10a7a0597720948fc
 
