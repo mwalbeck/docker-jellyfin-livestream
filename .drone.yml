@@ -85,22 +85,6 @@ steps:
         from_secret: dockerhub_password
       repo: mwalbeck/jellyfin-livestream
 
-  - name: notify
-    image: plugins/matrix
-    pull: if-not-exists
-    settings:
-      homeserver: https://matrix.mwalbeck.org
-      roomid:
-        from_secret: matrix_roomid
-      username:
-        from_secret: matrix_username
-      password:
-        from_secret: matrix_password
-    when:
-      status:
-        - success
-        - failure
-
 trigger:
   branch:
     - master
@@ -112,6 +96,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 53bf04b6a06d1cf4fb1413abc31e7f2d3d080bb318c7e622ddabd70996702812
+hmac: 1d6c1aec32d28b7d396e433f1b391b44e0978dec9a10f0c8edbbdc5c4568b98f
 
 ...
