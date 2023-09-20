@@ -32,7 +32,7 @@ RUN set -ex; \
     git apply /jellyfin_livestream.patch; \
     dotnet publish Jellyfin.Server --disable-parallel --configuration Release --output="/jellyfin" --self-contained --runtime linux-x64 -p:DebugSymbols=false -p:DebugType=none;
 
-FROM debian:bullseye-slim@sha256:40c0654c268cdc2077638b2d1660b7bf9824ae3e71dd59806f76efaeb9f56715
+FROM debian:bullseye-slim@sha256:c618be84fc82aa8ba203abbb07218410b0f5b3c7cb6b4e7248fda7785d4f9946
 
 SHELL [ "/bin/bash", "-exo", "pipefail", "-c" ]
 
