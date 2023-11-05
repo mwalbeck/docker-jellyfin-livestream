@@ -19,7 +19,7 @@ RUN set -ex; \
 FROM mcr.microsoft.com/dotnet/sdk:6.0@sha256:229eee05c4a54649f9c0c86c8265ffeb87ce160a330a671a86d51ede66359e2b as builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin versioning=semver
-ENV JELLYFIN_VERSION v10.8.11
+ENV JELLYFIN_VERSION v10.8.12
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 WORKDIR /repo
