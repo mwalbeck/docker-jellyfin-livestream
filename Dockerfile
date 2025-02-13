@@ -51,7 +51,7 @@ RUN apt-get update; \
     echo "deb [arch=amd64] https://repo.jellyfin.org/debian bullseye main" | tee /etc/apt/sources.list.d/jellyfin.list; \
     apt-get update; \
     apt-get install --no-install-recommends -y \
-        jellyfin-ffmpeg \
+        jellyfin-ffmpeg5 \
         openssl \
         locales \
     ; \
