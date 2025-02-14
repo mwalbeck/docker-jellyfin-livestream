@@ -14,8 +14,6 @@ jobs:
         with:
           dockerfile: Dockerfile
       - uses: https://github.com/ludeeus/action-shellcheck@2.0.0
-        with:
-          dockerfile: Dockerfile
 
   build:
     runs-on: dind
