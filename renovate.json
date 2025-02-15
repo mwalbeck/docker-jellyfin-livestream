@@ -3,5 +3,8 @@
   "extends": [
     "local>walbeck-it/renovate-config",
     "local>walbeck-it/renovate-config:docker"
-  ]
+  ],
+  "major": {
+    "enabled": false
+  }
 }
