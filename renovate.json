@@ -3,6 +3,6 @@
   "extends": [
     "local>walbeck-it/renovate-config",
     "local>walbeck-it/renovate-config:docker",
-    ":disableMajorUpdates"
+    "docker:disableMajor"
   ]
 }
