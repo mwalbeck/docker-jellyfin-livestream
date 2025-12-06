@@ -44,7 +44,7 @@ trap cleanup SIGINT
 
 /usr/lib/jellyfin-ffmpeg/ffmpeg -re -analyzeduration 30M -fflags +genpts -f matroska,webm -i file:"$absolute_path" \
 -map_metadata -1 -map_chapters -1 -threads 0 -map 0:0 -map 0:1 -map -0:s -codec:v:0 copy -start_at_zero \
--codec:a:0 copy -copyts -avoid_negative_ts disabled -max_muxing_queue_size 2048 \
+-codec:a:0 aac -copyts -avoid_negative_ts disabled -max_muxing_queue_size 2048 \
 -f hls -max_delay 5000000 -hls_time 6 -hls_segment_type mpegts -start_number 0 \
 -hls_segment_filename "$TRANSCODE_DIR/$filename%d.ts" -hls_playlist_type vod \
 -hls_list_size 0 -y "$TRANSCODE_DIR/$filename.m3u8"

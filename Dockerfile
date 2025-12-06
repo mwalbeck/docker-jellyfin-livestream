@@ -1,4 +1,4 @@
-FROM node:16.20.2-bullseye-slim@sha256:503446c15c6236291222f8192513c2eb56a02a8949cbadf4fe78cce19815c734 as web-builder
+FROM node:16.20.2-bookworm-slim@sha256:b7455f5272e7397f3879a8b3bc7263d18dfb95e75d74ed56cf5506b5d8bc493f as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
 ENV JELLYFIN_WEB_VERSION v10.8.13
@@ -32,7 +32,7 @@ RUN set -ex; \
     git apply /jellyfin_livestream.patch; \
     dotnet publish Jellyfin.Server --disable-parallel --configuration Release --output="/jellyfin" --self-contained --runtime linux-x64 -p:DebugSymbols=false -p:DebugType=none;
 
-FROM debian:bullseye-slim@sha256:530a3348fc4b5734ffe1a137ddbcee6850154285251b53c3425c386ea8fac77b
+FROM debian:bookworm-slim@sha256:72ceb30c8c49e50d4bf87aa6eb5390c3bcf091c13f41e6382e79953ea44c11c8
 
 SHELL [ "/bin/bash", "-exo", "pipefail", "-c" ]
 
@@ -47,8 +47,8 @@ RUN apt-get update; \
         curl \
         apt-transport-https \
     ; \
-    curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add -; \
-    echo "deb [arch=amd64] https://repo.jellyfin.org/debian bullseye main" | tee /etc/apt/sources.list.d/jellyfin.list; \
+    curl -fsSL -o /etc/apt/keyrings/jellyfin.asc https://repo.jellyfin.org/jellyfin_team.gpg.key; \
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/jellyfin.asc] https://repo.jellyfin.org/debian bookworm main" | tee /etc/apt/sources.list.d/jellyfin.list; \
     apt-get update; \
     apt-get install --no-install-recommends -y \
         jellyfin-ffmpeg5 \
