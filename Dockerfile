@@ -1,7 +1,7 @@
-FROM node:16.20.2-bookworm-slim@sha256:b7455f5272e7397f3879a8b3bc7263d18dfb95e75d74ed56cf5506b5d8bc493f as web-builder
+FROM node:14.21.3-bullseye-slim@sha256:dbe354a79f39b4e8f172d16375b0f99bbd61e99d238534c88dcd67990107b32d as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
-ENV JELLYFIN_WEB_VERSION v10.8.13
+ENV JELLYFIN_WEB_VERSION v10.7.6
 
 WORKDIR /jellyfin-web
 
@@ -16,10 +16,10 @@ RUN set -ex; \
     npm run build:production; \
     mv dist /dist;
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0@sha256:c8fdd06e430de9f4ddd066b475ea350d771f341b77dd5ff4c2fafa748e3f2ef2 as builder
+FROM mcr.microsoft.com/dotnet/sdk:5.0.408-bullseye-slim@sha256:40c6bd0059eaa06b4a9c91cd3e6df138f6224bd02b2882bf6ce3aa4af3835fc5 as builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin versioning=semver
-ENV JELLYFIN_VERSION v10.8.13
+ENV JELLYFIN_VERSION v10.7.6
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 WORKDIR /repo
