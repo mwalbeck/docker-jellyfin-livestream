@@ -32,7 +32,7 @@ RUN set -ex; \
     git apply /jellyfin_livestream.patch; \
     dotnet publish Jellyfin.Server --disable-parallel --configuration Release --output="/jellyfin" --self-contained --runtime linux-x64 -p:DebugSymbols=false -p:DebugType=none;
 
-FROM debian:bookworm-slim@sha256:72ceb30c8c49e50d4bf87aa6eb5390c3bcf091c13f41e6382e79953ea44c11c8
+FROM debian:bullseye-slim@sha256:77f46c1cf862290e750e913defffb2828c889d291a93bdd10a7a0597720948fc
 
 SHELL [ "/bin/bash", "-exo", "pipefail", "-c" ]
 
@@ -47,8 +47,8 @@ RUN apt-get update; \
         curl \
         apt-transport-https \
     ; \
-    curl -fsSL -o /etc/apt/keyrings/jellyfin.asc https://repo.jellyfin.org/jellyfin_team.gpg.key; \
-    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/jellyfin.asc] https://repo.jellyfin.org/debian bookworm main" | tee /etc/apt/sources.list.d/jellyfin.list; \
+    curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add -; \
+    echo "deb [arch=amd64] https://repo.jellyfin.org/debian bullseye main" | tee /etc/apt/sources.list.d/jellyfin.list; \
     apt-get update; \
     apt-get install --no-install-recommends -y \
         jellyfin-ffmpeg5 \
