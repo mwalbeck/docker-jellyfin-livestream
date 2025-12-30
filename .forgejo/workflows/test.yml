@@ -26,15 +26,10 @@ jobs:
           DOCKERFILE_PATH: "Dockerfile"
           CUSTOM_TAGS: "latest"
           INCLUDE_MAJOR: "no"
-          IMAGE_NAME: "mwalbeck/jellyfin-livestream"
+          IMAGE_NAME: "git.walbeck.it/mwalbeck/jellyfin-livestream"
         run: |
           determine-docker-tags
           dockerd &
-      - name: Login to Docker Hub
-        uses: https://github.com/docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN_RO }}
       - name: Set up Docker Buildx
         uses: https://github.com/docker/setup-buildx-action@v3
       - name: Test build

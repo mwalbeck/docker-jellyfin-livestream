@@ -1,7 +1,7 @@
 FROM node:14.21.3-bullseye-slim@sha256:dbe354a79f39b4e8f172d16375b0f99bbd61e99d238534c88dcd67990107b32d as web-builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin-web versioning=semver
-ENV JELLYFIN_WEB_VERSION v10.7.6
+ENV JELLYFIN_WEB_VERSION=v10.7.6
 
 WORKDIR /jellyfin-web
 
@@ -19,7 +19,7 @@ RUN set -ex; \
 FROM mcr.microsoft.com/dotnet/sdk:5.0.408-bullseye-slim@sha256:40c6bd0059eaa06b4a9c91cd3e6df138f6224bd02b2882bf6ce3aa4af3835fc5 as builder
 
 # renovate: datasource=github-tags depName=jellyfin/jellyfin versioning=semver
-ENV JELLYFIN_VERSION v10.7.6
+ENV JELLYFIN_VERSION=v10.7.6
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 WORKDIR /repo
@@ -66,9 +66,9 @@ RUN apt-get update; \
     locale-gen;
 
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
 
 COPY start-transcode.sh /usr/local/bin/start-transcode
 
