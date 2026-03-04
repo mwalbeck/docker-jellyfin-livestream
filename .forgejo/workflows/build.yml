@@ -33,7 +33,7 @@ jobs:
           determine-docker-tags
           dockerd &
       - name: Login to Forgejo registry
-        uses: https://github.com/docker/login-action@v3
+        uses: https://github.com/docker/login-action@v4
         with:
           registry: git.walbeck.it
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
